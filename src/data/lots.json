@@ -1,0 +1,5 @@
+[
+    { "id": "760", "status": "available", "price": 20000, "details": "Lot size: 250m²" },
+    { "id": "781", "status": "sold", "price": 22000, "details": "Corner lot" },
+    { "id": "805", "status": "reserved", "price": 19500, "details": "Near amenities" }
+  ]

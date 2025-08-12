@@ -1,0 +1,83 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// schema.prisma
+
+model User {
+  id                String   @id @default(cuid()) // Internal DB ID
+  clerkId           String   @unique              // Clerk user ID
+  email             String   @unique
+  fullName          String
+  marriageStatus    String
+  occupation        String?
+  placeOfBirth      String
+  dateOfBirth       DateTime
+  cellPhone         String
+  copyOfIdUrl       String   // URL from Cloudinary or S3
+  curp              String?  // Only for Mexican nationals
+  proofOfResidencyUrl String // URL from Cloudinary or S3
+  role              UserRole @default(BUYER)
+
+  lotsOwned         Lot[]    @relation("OwnerLots")
+  lotsRented        Lot[]    @relation("RenterLots")
+
+  createdAt         DateTime @default(now())
+  updatedAt         DateTime @updatedAt
+}
+
+model Lot {
+  id             String       @id @default(cuid())
+  status         LotStatus
+  rentStatus     Boolean
+  rentPrice      Float?
+  price          Float
+  amenities      Amenities[]
+  width          Float
+  length         Float
+  height         Float
+  geoLocation    String       // Google Maps link or lat/long string
+  svgId          String       // ID of lot in SVG map
+
+  ownerId        String?
+  owner          User?        @relation("OwnerLots", fields: [ownerId], references: [id])
+
+  renterId       String?
+  renter         User?        @relation("RenterLots", fields: [renterId], references: [id])
+
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+}
+
+// Enums
+enum LotStatus {
+  PURCHASED
+  SOLD
+  PENDING
+}
+
+enum Amenities {
+  POOL
+  GARDEN
+  BBQ_AREA
+  GARAGE
+  ROOFTOP
+}
+
+enum UserRole {
+  ADMIN
+  BUYER
+  RENTER
+}
