@@ -1,67 +1,60 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
+// schema.prisma
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "postgresql" // use "mysql" or "mongodb" if preferred
   url      = env("DATABASE_URL")
 }
 
-// schema.prisma
-
 model User {
-  id                String   @id @default(cuid()) // Internal DB ID
-  clerkId           String   @unique              // Clerk user ID
-  email             String   @unique
-  fullName          String
-  marriageStatus    String
-  occupation        String?
-  placeOfBirth      String
-  dateOfBirth       DateTime
-  cellPhone         String
-  copyOfIdUrl       String   // URL from Cloudinary or S3
-  curp              String?  // Only for Mexican nationals
-  proofOfResidencyUrl String // URL from Cloudinary or S3
-  role              UserRole @default(BUYER)
+  id               String         @id @default(uuid())
+  fullName         String
+  marriageStatus   MarriageStatus
+  occupation       String?        // Optional
+  placeOfBirth     String
+  dateOfBirth      DateTime
+  email            String         @unique
+  cellPhone        String
+  copyOfIdUrl      String         // Stored as file/image URL
+  curp             String?        // Mexican CURP (optional)
+  proofOfResidencyUrl String      // Stored as file/image URL
+  lots             Lot[]          // One user can own multiple lots
+  supabaseId       String         @unique // maps to Supabase's user ID
 
-  lotsOwned         Lot[]    @relation("OwnerLots")
-  lotsRented        Lot[]    @relation("RenterLots")
-
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
 }
 
 model Lot {
-  id             String       @id @default(cuid())
-  status         LotStatus
-  rentStatus     Boolean
-  rentPrice      Float?
-  price          Float
-  amenities      Amenities[]
-  width          Float
-  length         Float
-  height         Float
-  geoLocation    String       // Google Maps link or lat/long string
-  svgId          String       // ID of lot in SVG map
+  id                String       @id @default(cuid())
+  status            LotStatus
+  price             Float
+  amenities         String[]     // Store as array of strings (Postgres)
+  width             Float
+  length            Float
+  height            Float
+  ownerId           String?
+  owner             User?        @relation(fields: [ownerId], references: [id])
 
-  ownerId        String?
-  owner          User?        @relation("OwnerLots", fields: [ownerId], references: [id])
+  createdAt         DateTime     @default(now())
+  updatedAt         DateTime     @updatedAt
 
-  renterId       String?
-  renter         User?        @relation("RenterLots", fields: [renterId], references: [id])
-
-  createdAt      DateTime     @default(now())
-  updatedAt      DateTime     @updatedAt
+  @@index([status])
+  @@index([price])
 }
 
 // Enums
+
+enum MarriageStatus {
+  SINGLE
+  MARRIED
+  DIVORCED
+  WIDOWED
+}
+
+
 enum LotStatus {
   PURCHASED
   SOLD
@@ -69,15 +62,18 @@ enum LotStatus {
 }
 
 enum Amenities {
+  GYM
   POOL
-  GARDEN
+  PLAYGROUND
+  PET_PARK
+  YOGA
   BBQ_AREA
-  GARAGE
-  ROOFTOP
+  GREAT_VIEW
+  CLOSE_TO_AMMENITIES
+  CORNER
 }
 
 enum UserRole {
   ADMIN
   BUYER
-  RENTER
 }

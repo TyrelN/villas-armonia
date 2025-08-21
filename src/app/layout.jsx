@@ -1,5 +1,4 @@
 import { Geist, Geist_Mono } from "next/font/google";
-import { ClerkProvider } from "@clerk/nextjs";
 import "../styles/globals.css";
 import Navbar from "../components/Navbar";
 import Providers from "@/components/Providers";
@@ -21,19 +20,18 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
+    <Providers>
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers>
           <Navbar />
           <main className="">
             {children}
           </main>
-        </Providers>
+        
       </body>
     </html>
-    </ClerkProvider>
+    </Providers>
   );
 }

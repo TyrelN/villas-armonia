@@ -1,66 +1,201 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import { Card, CardContent } from "@/components/ui/card";
+
+// Parallax Background Component
+const ParallaxBackground = ({ children, imageSrc, alt }) => {
+  return (
+    <div 
+  className="parallax"
+  style={{ backgroundImage: `url(${imageSrc})` }}
+>
+  <div className="relative z-10 h-full flex items-center justify-center">
+    {children}
+  </div>
+</div>
+  );
+};
 
 export default function Home() {
+  // Villa showcase images
+  const villaImages = [
+    {
+      src: "/images/baaxal_aerial_view.webp",
+      alt: "Baaxal Villa Aerial View",
+      title: "Baaxal Villa",
+      description: "Stunning aerial perspective of our premier villa complex"
+    },
+    {
+      src: "/images/Chanpaal_birdseye.webp", 
+      alt: "Chanpaal Villa Bird's Eye View",
+      title: "Chanpaal Villa",
+      description: "Bird's eye view showcasing the architectural beauty"
+    },
+    {
+      src: "/images/Baaxal_pool.webp",
+      alt: "Baaxal Pool Area",
+      title: "Pool & Wellness",
+      description: "Relaxing pool area with wellness facilities"
+    },
+    {
+      src: "/images/Baaxal_yoga.webp",
+      alt: "Baaxal Yoga Studio",
+      title: "Yoga & Fitness",
+      description: "Dedicated spaces for health and wellness"
+    },
+    {
+      src: "/images/Baaxal_plaza.webp",
+      alt: "Baaxal Plaza",
+      title: "Community Plaza",
+      description: "Central gathering space for community events"
+    },
+    {
+      src: "/images/Comercial_lounge.webp",
+      alt: "Commercial Lounge",
+      title: "Commercial Lounge",
+      description: "Sophisticated lounge area for residents and guests"
+    }
+  ];
+
+  // Amenities data for accordion
+  const amenities = [
+    {
+      title: "Family Amenities",
+      content: "Our family-focused amenities include dedicated children's play areas, family pools with shallow sections, outdoor movie nights, and community gardens where families can grow together. We also offer family-friendly events and workshops throughout the year."
+    },
+    {
+      title: "Villa Pools & Wellness",
+      content: "Each villa complex features private pools with temperature control, hot tubs, and wellness areas. Our Baaxal complex includes a dedicated yoga studio, meditation gardens, and spa facilities. All pools are designed with both relaxation and social interaction in mind."
+    },
+    {
+      title: "Fitness Centers",
+      content: "State-of-the-art fitness centers are available in each villa complex, featuring modern equipment, personal training services, group fitness classes, and wellness programs. Our facilities are designed to support both individual workouts and community fitness activities."
+    },
+    {
+      title: "Transit & Connectivity",
+      content: "Villa Armonia offers convenient transit options including shuttle services to nearby attractions, bike-sharing programs, and easy access to public transportation. We also provide electric vehicle charging stations and car-sharing services for sustainable transportation."
+    },
+    {
+      title: "Community Spaces",
+      content: "Our community spaces include the central plaza for events, commercial lounges for socializing, outdoor dining areas, and multipurpose rooms for workshops and gatherings. These spaces are designed to foster community connections and cultural exchange."
+    },
+    {
+      title: "Cultural Exchange Programs",
+      content: "We facilitate cultural exchange through language exchange programs, cooking classes featuring local and international cuisine, art workshops, and cultural celebration events. Our community is designed to bring together people from diverse backgrounds."
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-warm via-accent-sand/5 to-accent-gold/5">
-      {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center overflow-hidden">
-        {/* Background Image with Enhanced Warm Overlay */}
-        <div className="absolute inset-0 z-0">
-          <Image
-            src="/images/mexico-sunset-background-wide.webp"
-            alt="Villa Armonia Sunset"
-            fill
-            className="object-cover"
-            priority
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-primary-color/70 via-accent-clay/50 to-accent-sand/40"></div>
-          {/* Sandy beach texture overlay */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(217,179,130,0.1)_0%,transparent_50%)]"></div>
-        </div>
-        
-        {/* Hero Content with Enhanced Glassmorphism */}
-        <div className="relative z-10 mt-20 text-center text-white px-6 max-w-6xl">
-          <div className="glass-card rounded-2xl p-16 mx-auto max-w-6xl border border-accent-gold/20 shadow-2xl relative overflow-hidden">
-            <div className="absolute inset-0 bg-gradient-to-br from-accent-sand/5 via-transparent to-accent-gold/5"></div>
-            <div className="relative z-10">
-              
-              {/* Main title with enhanced typography */}
-              <h1 className="text-7xl md:text-8xl font-bold mb-8 text-shadow-strong text-[#121212] leading-tight">
-                Villa Armonia
-              </h1>
-              
-              {/* Enhanced headline with dark grey accents */}
-              <div className="mb-10">
-                <p className="text-2xl md:text-3xl mb-4 max-w-5xl mx-auto text-shadow-strong text-[#121212] leading-relaxed font-medium">
-                  A comprehensive village in the heart of 
-                  <span className="font-bold text-[#121212]"> Yucatán</span>
-                </p>
-                <p className="text-xl md:text-2xl max-w-4xl mx-auto text-shadow-strong text-[#121212] leading-relaxed font-semibold">
-                  Prioritizing <span className="text-[#121212] font-bold">community</span>, 
-                  <span className="text-[#121212] font-bold"> cultural exchange</span>, 
-                  <span className="text-[#121212] font-bold"> cozy luxury</span>, and 
-                  <span className="text-[#121212] font-bold"> acceptance</span>
-                </p>
-              </div>
-              <div className="flex flex-col sm:flex-row gap-8 justify-center">
-                <Link 
-                  href="/lot-map" 
-                  className="gradient-earth hover-lift text-white px-12 py-6 rounded-2xl text-xl font-semibold shadow-2xl relative group transition-all duration-300 hover:scale-105"
-                >
-                  <span className="absolute inset-0 bg-gradient-to-r from-accent-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                  <span className="relative z-10">Explore Available Lots</span>
-                </Link>
-                <Link 
-                  href="/about" 
-                  className="glass hover-lift text-primary-color px-12 py-6 rounded-2xl text-xl font-semibold border-2 border-accent-gold/50 relative overflow-hidden group transition-all duration-300 hover:scale-105 hover:border-accent-gold/70 shadow-lg"
-                >
-                  <span className="absolute inset-0 bg-gradient-to-r from-accent-gold/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-                  <span className="relative z-10">Learn More</span>
-                </Link>
-              </div>
-            </div>
+      {/* Hero Section with Parallax Background */}
+      <ParallaxBackground 
+  imageSrc="/images/mexico-sunset-background-wide.webp"
+  alt="Villa Armonia Sunset"
+>
+  {/* Hero Content with Glassmorphism */}
+  <div className="mt-20 text-center px-6 max-w-6xl mx-auto">
+    <div className="bg-white/15 backdrop-blur-md border border-white/20 rounded-2xl p-16 shadow-2xl">
+      
+      {/* Main title */}
+      <h1 className="text-6xl md:text-7xl font-bold mb-8 text-white drop-shadow-lg leading-tight">
+        Villa Armonia
+      </h1>
+
+      {/* Headline */}
+      <div className="mb-10 space-y-4">
+        <p className="text-2xl md:text-3xl max-w-4xl mx-auto text-white/90 drop-shadow-md font-medium leading-relaxed">
+          A comprehensive village in the heart of 
+          <span className="font-bold text-white"> Yucatán</span>
+        </p>
+        <p className="text-xl md:text-2xl max-w-3xl mx-auto text-white/90 drop-shadow-md font-semibold leading-relaxed">
+          Prioritizing <span className="font-bold">community</span>, 
+          <span className="font-bold"> cultural exchange</span>, 
+          <span className="font-bold"> cozy luxury</span>, and 
+          <span className="font-bold"> acceptance</span>
+        </p>
+      </div>
+
+      {/* Buttons */}
+      <div className="flex flex-col sm:flex-row gap-8 justify-center">
+        <Link 
+          href="/lot-map" 
+          className="gradient-earth hover-lift text-white px-12 py-6 rounded-2xl text-xl font-semibold shadow-xl relative group transition-transform duration-300 hover:scale-105"
+        >
+          <span className="absolute inset-0 bg-gradient-to-r from-accent-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+          <span className="relative z-10">Explore Available Lots</span>
+        </Link>
+        <Link 
+          href="/about" 
+          className="bg-white/20 backdrop-blur-sm hover-lift text-white px-12 py-6 rounded-2xl text-xl font-semibold border border-accent-gold/40 relative group transition-all duration-300 hover:scale-105 hover:border-accent-gold/70 shadow-lg"
+        >
+          <span className="absolute inset-0 bg-gradient-to-r from-accent-gold/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
+          <span className="relative z-10">Learn More</span>
+        </Link>
+      </div>
+    </div>
+  </div>
+</ParallaxBackground>
+
+      {/* Villa Showcase Carousel Section */}
+      <section className="py-24 bg-gradient-to-br from-accent-sand/10 via-warm to-accent-gold/5 relative">
+        {/* Sandy texture background */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(217,179,130,0.1)_0%,transparent_50%),radial-gradient(circle_at_80%_70%,rgba(198,161,91,0.08)_0%,transparent_50%)]"></div>
+        <div className="relative z-10 max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-5xl md:text-6xl font-bold text-primary-color mb-6 text-shadow-soft">
+              Villa Showcase
+            </h2>
+            <p className="text-xl text-secondary-color max-w-3xl mx-auto leading-relaxed">
+              Discover the beauty and luxury of our villa complexes, each designed with 
+              community, comfort, and cultural exchange in mind.
+            </p>
+          </div>
+          
+          <div className="glass-card rounded-3xl p-8 border border-accent-sand/20 shadow-2xl">
+            <Carousel className="w-full">
+              <CarouselContent>
+                {villaImages.map((image, index) => (
+                  <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+                    <div className="p-2">
+                      <Card className="overflow-hidden hover-lift border border-accent-sand/30 transition-all duration-300">
+                        <CardContent className="p-0">
+                          <div className="relative aspect-[4/3] overflow-hidden">
+                            <Image
+                              src={image.src}
+                              alt={image.alt}
+                              fill
+                              className="object-cover transition-transform duration-500 hover:scale-110"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                            <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                              <h3 className="text-xl font-bold mb-2 text-shadow-strong">{image.title}</h3>
+                              <p className="text-sm text-shadow-soft opacity-90">{image.description}</p>
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+              <CarouselPrevious className="left-4 bg-white/80 hover:bg-white border-accent-sand/30 text-primary-color" />
+              <CarouselNext className="right-4 bg-white/80 hover:bg-white border-accent-sand/30 text-primary-color" />
+            </Carousel>
           </div>
         </div>
       </section>
@@ -133,11 +268,11 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Amenities Section */}
+      {/* Amenities Section with Accordion */}
       <section className="py-24 bg-gradient-to-br from-accent-sand/8 via-warm to-accent-gold/8 relative">
         {/* Enhanced sandy texture */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_30%,rgba(217,179,130,0.06)_0%,transparent_50%),radial-gradient(circle_at_80%_70%,rgba(198,161,91,0.06)_0%,transparent_50%)]"></div>
-        <div className="relative z-10 max-w-6xl mx-auto px-6">
+        <div className="relative z-10 max-w-4xl mx-auto px-6">
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-6xl font-bold text-primary-color mb-8 text-shadow-soft">
               World-Class Amenities
@@ -148,162 +283,21 @@ export default function Home() {
             </p>
           </div>
           
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {/* Pool & Wellness */}
-            <div className="glass-card rounded-2xl overflow-hidden hover-lift border border-accent-sand/20 relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-sand/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
-              <div className="relative z-10">
-                <div className="h-56 relative">
-                  <Image
-                    src="/images/Baaxal_pool.webp"
-                    alt="Villa Pool"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary-color/30 to-transparent"></div>
-                </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-semibold text-primary-color mb-4">Private Villa Pools</h3>
-                  <p className="text-secondary-color mb-6 leading-relaxed">
-                    Each villa features its own private pool, perfect for relaxation 
-                    and entertaining in your personal oasis.
-                  </p>
-                  <div className="flex items-center text-accent-sand">
-                    <span className="text-sm font-medium">Included with every villa</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Fitness Center */}
-            <div className="glass-card rounded-2xl overflow-hidden hover-lift border border-accent-sunset/20 relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-sunset/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
-              <div className="relative z-10">
-                <div className="h-56 relative">
-                  <Image
-                    src="/images/Baaxal_yoga.webp"
-                    alt="Fitness & Wellness"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary-color/30 to-transparent"></div>
-                </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-semibold text-primary-color mb-4">Fitness & Wellness Center</h3>
-                  <p className="text-secondary-color mb-6 leading-relaxed">
-                    State-of-the-art gym, yoga studios, and wellness spaces to keep 
-                    you healthy and energized.
-                  </p>
-                  <div className="flex items-center text-accent-sand">
-                    <span className="text-sm font-medium">Community access</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Family Amenities */}
-            <div className="glass-card rounded-2xl overflow-hidden hover-lift border border-accent-gold/20 relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
-              <div className="relative z-10">
-                <div className="h-56 relative">
-                  <Image
-                    src="/images/Baaxal_plaza.webp"
-                    alt="Family Plaza"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary-color/30 to-transparent"></div>
-                </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-semibold text-primary-color mb-4">Family-Focused Spaces</h3>
-                  <p className="text-secondary-color mb-6 leading-relaxed">
-                    Playgrounds, community gardens, and gathering areas designed 
-                    specifically for families to connect and grow together.
-                  </p>
-                  <div className="flex items-center text-accent-sand">
-                    <span className="text-sm font-medium">Family-friendly design</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Transit */}
-            <div className="glass-card rounded-2xl overflow-hidden hover-lift border border-accent-sand/20 relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-sand/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
-              <div className="relative z-10">
-                <div className="h-56 relative">
-                  <Image
-                    src="/images/Baaxal_bikes.webp"
-                    alt="Sustainable Transit"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary-color/30 to-transparent"></div>
-                </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-semibold text-primary-color mb-4">Sustainable Transit</h3>
-                  <p className="text-secondary-color mb-6 leading-relaxed">
-                    Electric vehicle charging, bike-sharing programs, and easy access 
-                    to public transportation for eco-friendly mobility.
-                  </p>
-                  <div className="flex items-center text-accent-sand">
-                    <span className="text-sm font-medium">Green transportation</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Commercial Lounge */}
-            <div className="glass-card rounded-2xl overflow-hidden hover-lift border border-accent-sunset/20 relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-sunset/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
-              <div className="relative z-10">
-                <div className="h-56 relative">
-                  <Image
-                    src="/images/Comercial_lounge.webp"
-                    alt="Commercial Lounge"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary-color/30 to-transparent"></div>
-                </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-semibold text-primary-color mb-4">Commercial Lounge</h3>
-                  <p className="text-secondary-color mb-6 leading-relaxed">
-                    Professional workspaces, meeting rooms, and networking areas for 
-                    remote work and business collaboration.
-                  </p>
-                  <div className="flex items-center text-accent-sand">
-                    <span className="text-sm font-medium">Work-friendly environment</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Community Spaces */}
-            <div className="glass-card rounded-2xl overflow-hidden hover-lift border border-accent-gold/20 relative group">
-              <div className="absolute inset-0 bg-gradient-to-br from-accent-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
-              <div className="relative z-10">
-                <div className="h-56 relative">
-                  <Image
-                    src="/images/Commercial_lot.webp"
-                    alt="Community Spaces"
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-primary-color/30 to-transparent"></div>
-                </div>
-                <div className="p-8">
-                  <h3 className="text-2xl font-semibold text-primary-color mb-4">Community Spaces</h3>
-                  <p className="text-secondary-color mb-6 leading-relaxed">
-                    Outdoor amphitheaters, community kitchens, and event spaces for 
-                    celebrations, workshops, and cultural activities.
-                  </p>
-                  <div className="flex items-center text-accent-sand">
-                    <span className="text-sm font-medium">Shared community areas</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <div className="glass-card rounded-3xl p-8 border border-accent-sand/20 shadow-2xl">
+            <Accordion type="single" collapsible className="w-full">
+              {amenities.map((amenity, index) => (
+                <AccordionItem key={index} value={`item-${index}`} className="border-accent-sand/30">
+                  <AccordionTrigger className="text-xl font-semibold text-primary-color hover:text-accent-clay transition-colors px-4 py-6">
+                    {amenity.title}
+                  </AccordionTrigger>
+                  <AccordionContent className="px-4 pb-6">
+                    <p className="text-secondary-color leading-relaxed text-lg">
+                      {amenity.content}
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
       </section>
@@ -478,7 +472,7 @@ export default function Home() {
             </Link>
           </div>
         </div>
-      </section>
+    </section>
     </div>
   );
 }

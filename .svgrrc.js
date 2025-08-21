@@ -13,11 +13,7 @@ module.exports = {
       },
     ],
   },
-  svgProps: {
-    width: "380",
-    height: "1433",
-  },
-  icon: true,
+  icon: false,
   titleProp: true,
   descProp: true,
   ref: true,

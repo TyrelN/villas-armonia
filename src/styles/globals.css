@@ -128,11 +128,12 @@
 }
 
 .glass-card {
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 24px 0 rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.20);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 1rem;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
 }
 
 /* Custom Color Utilities */
@@ -226,6 +227,42 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-gold);
+}
+
+/* Simple CSS Parallax Effect */
+body, html {
+  height: 100%;
+}
+
+.parallax {
+  height: 100vh;
+  background-attachment: fixed; /* key for parallax */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: relative;
+}
+
+
+/* Ensure smooth scrolling */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Lock body scroll for better performance */
+body {
+  overflow-x: hidden;
+}
+
+/* ========================================
+   MOBILE & TABLET RESPONSIVE ADJUSTMENTS
+   ======================================== */
+
+/* Turn off parallax scrolling for all tablets and phones. Increase/decrease the pixels if needed */
+@media only screen and (max-device-width: 1366px) {
+  .parallax {
+    background-attachment: scroll;
+  }
 }
 .dark {
   --background: oklch(0.141 0.005 285.823);

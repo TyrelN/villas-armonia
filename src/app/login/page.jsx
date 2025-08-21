@@ -6,14 +6,12 @@ import { useAuth } from "@/contexts/AuthContext";
 import Link from "next/link";
 import { createClient } from "@/lib/supabase-client";
 
-export default function SignupPage() {
+export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [fullName, setFullName] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [message, setMessage] = useState("");
-  const { signUp } = useAuth();
+  const { signIn } = useAuth();
   const router = useRouter();
   const supabase = createClient();
 
@@ -21,22 +19,18 @@ export default function SignupPage() {
     e.preventDefault();
     setLoading(true);
     setError("");
-    setMessage("");
 
-    const { data, error } = await signUp(email, password, {
-      full_name: fullName,
-    });
+    const { error } = await signIn(email, password);
     
     if (error) {
       setError(error.message);
       setLoading(false);
     } else {
-      setMessage("Check your email for a confirmation link!");
-      setLoading(false);
+      router.push("/");
     }
   };
 
-  const handleGoogleSignUp = async () => {
+  const handleGoogleSignIn = async () => {
     setLoading(true);
     setError("");
 
@@ -57,13 +51,13 @@ export default function SignupPage() {
     <div className="flex justify-center items-center min-h-screen bg-[#002D18]">
       <div className="bg-white/30 backdrop-blur-lg shadow-lg rounded-xl p-8 w-full max-w-md">
         <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-white mb-2">Create Account</h1>
-          <p className="text-white/80">Join Villa Armonia today</p>
+          <h1 className="text-2xl font-bold text-white mb-2">Welcome Back</h1>
+          <p className="text-white/80">Sign in to your Villa Armonia account</p>
         </div>
 
-        {/* Google Sign Up Button */}
+        {/* Google Sign In Button */}
         <button
-          onClick={handleGoogleSignUp}
+          onClick={handleGoogleSignIn}
           disabled={loading}
           className="w-full bg-white text-gray-800 py-3 px-4 rounded-lg hover:bg-gray-100 transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed mb-6 flex items-center justify-center gap-3"
         >
@@ -92,27 +86,6 @@ export default function SignupPage() {
             </div>
           )}
 
-          {message && (
-            <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
-              {message}
-            </div>
-          )}
-
-          <div>
-            <label htmlFor="fullName" className="block text-sm font-medium text-white mb-2">
-              Full Name
-            </label>
-            <input
-              id="fullName"
-              type="text"
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
-              required
-              className="w-full px-4 py-3 rounded-lg border border-white/20 bg-white/10 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-[#335420] focus:border-transparent"
-              placeholder="Enter your full name"
-            />
-          </div>
-
           <div>
             <label htmlFor="email" className="block text-sm font-medium text-white mb-2">
               Email
@@ -138,9 +111,8 @@ export default function SignupPage() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              minLength={6}
               className="w-full px-4 py-3 rounded-lg border border-white/20 bg-white/10 text-white placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-[#335420] focus:border-transparent"
-              placeholder="Enter your password (min 6 characters)"
+              placeholder="Enter your password"
             />
           </div>
 
@@ -149,15 +121,15 @@ export default function SignupPage() {
             disabled={loading}
             className="w-full bg-[#335420] text-white py-3 px-4 rounded-lg hover:bg-[#A9BBB2] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? "Creating account..." : "Sign Up"}
+            {loading ? "Signing in..." : "Sign In"}
           </button>
         </form>
 
         <div className="mt-6 text-center">
           <p className="text-white/80">
-            Already have an account?{" "}
-            <Link href="/login" className="text-[#335420] hover:underline font-medium">
-              Sign in
+            Don't have an account?{" "}
+            <Link href="/signup" className="text-[#335420] hover:underline font-medium">
+              Sign up
             </Link>
           </p>
         </div>
