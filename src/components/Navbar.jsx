@@ -73,7 +73,7 @@ export default function Navbar() {
                 </>
               ) : (
                 <Link href="/login">
-                  <button className="px-4 py-2 bg-[#335420] rounded-lg hover:bg-[#A9BBB2] transition">
+                  <button className="px-4 py-2 gradient-warm rounded-lg shadow-lg hover-lift transition-all duration-300 hover:scale-[1.02]">
                     Sign In
                   </button>
                 </Link>
