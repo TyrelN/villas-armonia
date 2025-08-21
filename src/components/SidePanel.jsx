@@ -131,7 +131,7 @@ export default function SidePanel({ lotNumber, onClose }) {
 
   if (loading) {
     return (
-      <div className={`fixed top-20 left-0 h-[calc(100vh-5rem)] w-80 bg-white bg-opacity-95 backdrop-blur-sm shadow-lg z-40 p-6 overflow-y-auto ${animationClasses}`}>
+      <div className={`fixed top-20 left-0 h-[calc(100vh-5rem)] w-80 bg-white bg-opacity-95 backdrop-blur-sm shadow-lg z-40 p-6 overflow-y-auto ${animationClasses} rounded-tr-2xl`}>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold">Loading...</h2>
           <button onClick={handleClose} className="text-gray-600 hover:text-black">
@@ -151,7 +151,7 @@ export default function SidePanel({ lotNumber, onClose }) {
 
   if (error) {
     return (
-      <div className={`fixed top-20 left-0 h-[calc(100vh-5rem)] w-80 bg-white bg-opacity-95 backdrop-blur-sm shadow-lg z-40 p-6 overflow-y-auto ${animationClasses}`}>
+      <div className={`fixed top-20 left-0 h-[calc(100vh-5rem)] w-80 bg-white bg-opacity-95 backdrop-blur-sm shadow-lg z-40 p-6 overflow-y-auto ${animationClasses} rounded-tr-2xl`}>
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-xl font-bold">Error</h2>
           <button onClick={handleClose} className="text-gray-600 hover:text-black">
@@ -176,7 +176,12 @@ export default function SidePanel({ lotNumber, onClose }) {
   }
 
   return (
-    <div className={`fixed top-20 left-0 h-[calc(100vh-5rem)] w-80 bg-white/85 backdrop-blur-sm shadow-lg z-40 overflow-y-auto ${animationClasses}`}>
+    <div className={`fixed top-20 left-0 h-[calc(100vh-5rem)] w-80 bg-white/85 backdrop-blur-sm shadow-lg z-40 overflow-y-auto ${animationClasses} rounded-tr-2xl`}
+    style={{
+      scrollbarGutter: 'stable both-edges',
+      scrollbarWidth: 'thin',
+      scrollbarColor: 'rgba(156, 163, 175, 0.5) transparent'
+    }}>
       {/* Header */}
       <div className="sticky top-0 bg-[var(--accent-sunset)]/75 backdrop-blur-sm p-6 z-10">
         <div className="flex justify-between items-center">
