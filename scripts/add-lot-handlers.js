@@ -26,7 +26,6 @@ const SvgLotMap = ({
 
   const handleLotClick = (lotNumber) => {
     setSelectedLot(lotNumber);
-    console.log(\`Clicked on Lot \${lotNumber}\`);
   };
 
   const handleClosePanel = () => {
@@ -112,8 +111,6 @@ const SvgLotMap = ({
     // Only allow clicks for available or reserved lots
     if (availability === 'available' || availability === 'reserved') {
       handleLotClick(lotNumber);
-    } else {
-      console.log(\`Lot \${lotNumber} is \${availability || 'not available'}\`);
     }
   };
 
@@ -268,7 +265,6 @@ function removeEmbeddedImages(svgContent) {
   const largeImageRegex = /<image[^>]*>[\s\S]*?<\/image>/g;
   modifiedContent = modifiedContent.replace(largeImageRegex, (match) => {
     if (match.length > 1000) {
-      console.log('Removed large embedded image');
       return '';
     }
     return match;
@@ -349,7 +345,6 @@ function addGlassmorphismToPerimeter(svgContent) {
 
 function processGeneratedComponent(inputPath, outputPath) {
   try {
-    console.log(`Processing ${inputPath}...`);
     
     // Read the generated component
     const generatedContent = fs.readFileSync(inputPath, 'utf8');
@@ -363,7 +358,6 @@ function processGeneratedComponent(inputPath, outputPath) {
     const directSvgMatch = generatedContent.match(/<svg[^>]*>([\s\S]*?)<\/svg>/);
     if (directSvgMatch) {
       svgContent = directSvgMatch[1];
-      console.log('Found direct SVG structure');
     }
     
     // Pattern 2: Wrapped in div with return statement
@@ -371,7 +365,6 @@ function processGeneratedComponent(inputPath, outputPath) {
       const wrappedSvgMatch = generatedContent.match(/return\s*\(\s*<div[^>]*>[\s\S]*?<svg[^>]*>([\s\S]*?)<\/svg>[\s\S]*?<\/div>\s*\)/);
       if (wrappedSvgMatch) {
         svgContent = wrappedSvgMatch[1];
-        console.log('Found wrapped SVG structure');
       }
     }
     
@@ -380,14 +373,10 @@ function processGeneratedComponent(inputPath, outputPath) {
       const anySvgMatch = generatedContent.match(/<svg[^>]*>([\s\S]*?)<\/svg>/);
       if (anySvgMatch) {
         svgContent = anySvgMatch[1];
-        console.log('Found generic SVG structure');
       }
     }
     
     if (!svgContent) {
-      console.error('Could not find SVG content in the generated component');
-      console.log('Available content preview:');
-      console.log(generatedContent.substring(0, 500) + '...');
       return false;
     }
     
@@ -405,8 +394,7 @@ function processGeneratedComponent(inputPath, outputPath) {
     
     // Write the enhanced component
     fs.writeFileSync(outputPath, finalComponent, 'utf8');
-    
-    console.log(`✅ Enhanced component written to ${outputPath}`);
+
     return true;
     
   } catch (error) {
@@ -419,16 +407,6 @@ function main() {
   const args = process.argv.slice(2);
   
   if (args.length < 1) {
-    console.log(`
-Usage: node scripts/add-lot-handlers.js <input-file> [output-file]
-
-Examples:
-  node scripts/add-lot-handlers.js src/assets/LotMap.jsx
-  node scripts/add-lot-handlers.js src/assets/LotMap.jsx src/components/Lotmap.jsx
-
-This script adds click handlers and styling functions to a generated SVG React component,
-making it interactive like the current Lotmap.jsx component.
-    `);
     process.exit(1);
   }
   
@@ -443,6 +421,7 @@ making it interactive like the current Lotmap.jsx component.
   const success = processGeneratedComponent(inputPath, outputPath);
   
   if (success) {
+    if (process.env.NODE_ENV === 'development') {
     console.log(`
 🎉 Success! Your enhanced component is ready.
 
@@ -457,8 +436,8 @@ The component now includes:
 - Side panel integration
 - Proper state management
     `);
+    }
   } else {
-    console.error('❌ Failed to process component');
     process.exit(1);
   }
 }

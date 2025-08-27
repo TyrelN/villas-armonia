@@ -3,6 +3,7 @@
 import * as React from "react";
 import { forwardRef, useState } from "react";
 import SidePanel from "@/components/SidePanel";
+import LotPurchaseModal from "@/components/LotPurchaseModal";
 
 const SvgLotMap = ({ 
   title, 
@@ -13,14 +14,24 @@ const SvgLotMap = ({
   ...props 
 }, ref) => {
   const [selectedLot, setSelectedLot] = useState(null);
+  const [showPurchaseModal, setShowPurchaseModal] = useState(false);
+  const [selectedLotData, setSelectedLotData] = useState(null);
 
   const handleLotClick = (lotNumber) => {
     setSelectedLot(lotNumber);
-    console.log(`Clicked on Lot ${lotNumber}`);
   };
 
   const handleClosePanel = () => {
     setSelectedLot(null);
+  };
+
+  const handlePurchaseRequest = (lotData) => {
+    setSelectedLotData(lotData);
+    setShowPurchaseModal(true);
+  };
+
+  const handleRequestSubmitted = () => {
+    // Refresh lot availability data if needed
   };
 
   // Function to get lot fill color based on availability
@@ -30,10 +41,10 @@ const SvgLotMap = ({
     switch (availability) {
       case 'available':
         return 'oklch(96.2% .044 156.743)'; // Default green color
-      case 'unavailable':
-        return '#B7580A'; // Burgundy color for unavailable lots
       case 'reserved':
         return 'var(--color-orange-100)'; // Orange color for reserved lots
+      case 'pending_approval':
+        return '#dbeafe'; // Blue color for pending approval lots
       case 'sold':
         return '#6b7280'; // Gray color for sold lots
       default:
@@ -48,10 +59,10 @@ const SvgLotMap = ({
     switch (availability) {
       case 'available':
         return '#d9b382'; // Default stroke color
-      case 'unavailable':
-        return '#dc2626'; // Darker red for stroke
       case 'reserved':
         return '#d97706'; // Darker orange for stroke
+      case 'pending_approval':
+        return '#2563eb'; // Blue stroke for pending approval lots
       case 'sold':
         return '#374151'; // Darker gray for stroke
       default:
@@ -70,6 +81,8 @@ const SvgLotMap = ({
         return '#ffffff'; // White text for red background
       case 'reserved':
         return 'var(--color-orange-600)'; // White text for orange background
+      case 'pending_approval':
+        return '#2563eb'; // Blue text for pending approval lots
       case 'sold':
         return '#ffffff'; // White text for gray background
       default:
@@ -84,10 +97,10 @@ const SvgLotMap = ({
     switch (availability) {
       case 'available':
         return 'cursor-pointer hover:opacity-80 transition-opacity';
-      case 'unavailable':
-        return 'cursor-not-allowed opacity-60';
       case 'reserved':
         return 'cursor-pointer hover:opacity-80 transition-opacity';
+      case 'pending_approval':
+        return 'cursor-pointer hover:opacity-80 transition-opacity'; // Clickable while pending
       case 'sold':
         return 'cursor-not-allowed opacity-60';
       default:
@@ -99,11 +112,9 @@ const SvgLotMap = ({
   const handleLotClickWithAvailability = (lotNumber) => {
     const availability = lotAvailability[lotNumber];
     
-    // Only allow clicks for available or reserved lots
-    if (availability === 'available' || availability === 'reserved') {
+    // Allow clicks for available, reserved, or pending approval lots
+    if (availability === 'available' || availability === 'reserved' || availability === 'pending_approval') {
       handleLotClick(lotNumber);
-    } else {
-      console.log(`Lot ${lotNumber} is ${availability || 'not available'}`);
     }
   };
 
@@ -2534,12 +2545,23 @@ const SvgLotMap = ({
       </div>
       
       {/* Side Panel */}
-        {selectedLot && (
-                     <SidePanel
+      {selectedLot && (
+        <SidePanel
           lotNumber={selectedLot} 
-             onClose={handleClosePanel}
-           />
-        )}
+          onClose={handleClosePanel}
+          onPurchaseRequest={handlePurchaseRequest}
+        />
+      )}
+
+      {/* Lot Purchase Modal */}
+      {showPurchaseModal && selectedLotData && (
+        <LotPurchaseModal
+          lot={selectedLotData}
+          isOpen={showPurchaseModal}
+          onClose={() => setShowPurchaseModal(false)}
+          onRequestSubmitted={handleRequestSubmitted}
+        />
+      )}
     </div>
   );
 };

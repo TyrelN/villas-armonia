@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { User, LogOut, Settings } from 'lucide-react';
 
-export default function UserButton() {
+export default function UserButton({ isMobile = false }) {
   const { user, signOut } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
@@ -36,16 +36,39 @@ export default function UserButton() {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center justify-center w-8 h-8 rounded-full bg-accent-clay text-white hover:bg-accent-clay/80 transition-colors duration-200"
+        className={`flex items-center justify-center ${
+          isMobile 
+            ? 'w-full px-4 py-3 rounded-lg bg-accent-clay text-white hover:bg-accent-clay/80 transition-colors duration-200' 
+            : 'w-8 h-8 rounded-full bg-accent-clay text-white hover:bg-accent-clay/80 transition-colors duration-200'
+        }`}
       >
-        {user?.user_metadata?.avatar_url ? (
-          <img
-            src={user.user_metadata.avatar_url}
-            alt="Profile"
-            className="w-8 h-8 rounded-full object-cover"
-          />
+        {isMobile ? (
+          <div className="flex items-center w-full">
+            <div className="flex items-center justify-center w-8 h-8 rounded-full bg-white/20 mr-3">
+              {user?.user_metadata?.avatar_url ? (
+                <img
+                  src={user.user_metadata.avatar_url}
+                  alt="Profile"
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              ) : (
+                <span className="text-sm font-medium text-white">{getUserInitials()}</span>
+              )}
+            </div>
+            <span className="text-white font-medium">Profile</span>
+          </div>
         ) : (
-          <span className="text-sm font-medium">{getUserInitials()}</span>
+          <>
+            {user?.user_metadata?.avatar_url ? (
+              <img
+                src={user.user_metadata.avatar_url}
+                alt="Profile"
+                className="w-8 h-8 rounded-full object-cover"
+              />
+            ) : (
+              <span className="text-sm font-medium">{getUserInitials()}</span>
+            )}
+          </>
         )}
       </button>
 

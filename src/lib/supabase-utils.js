@@ -1,5 +1,6 @@
 import { createServerClient } from '@supabase/ssr'
 import { createBrowserClient } from '@supabase/ssr'
+import { createClient } from '@supabase/supabase-js'
 
 // For server-side usage (API routes, server components)
 export function createServerSupabaseClient(cookieStore) {
@@ -7,16 +8,25 @@ export function createServerSupabaseClient(cookieStore) {
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
     {
-      cookies: {
-        getAll() {
-          return cookieStore.getAll()
+      cookies: cookieStore ? {
+        async getAll() {
+          try {
+            return await cookieStore.getAll()
+          } catch (error) {
+            console.warn('Error getting cookies:', error.message)
+            return []
+          }
         },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) =>
-            cookieStore.set(name, value, options)
-          )
+        async setAll(cookiesToSet) {
+          try {
+            for (const { name, value, options } of cookiesToSet) {
+              await cookieStore.set(name, value, options)
+            }
+          } catch (error) {
+            console.warn('Error setting cookies:', error.message)
+          }
         },
-      },
+      } : undefined,
     }
   )
 }
@@ -47,5 +57,13 @@ export function createBrowserSupabaseClient() {
   return createBrowserClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  )
+}
+
+// For admin operations that don't need cookies
+export function createAdminSupabaseClient() {
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
   )
 }

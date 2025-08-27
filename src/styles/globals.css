@@ -253,6 +253,21 @@ body {
   overflow-x: hidden;
 }
 
+.modal-backdrop {
+  position: fixed;
+  inset: 0; /* shorthand for top:0; right:0; bottom:0; left:0 */
+  background: rgba(0,0,0,0.4);
+  z-index: 999;
+}
+
+.modal-content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  z-index: 1000;
+}
 /* ========================================
    MOBILE & TABLET RESPONSIVE ADJUSTMENTS
    ======================================== */
@@ -305,4 +320,3 @@ body {
     @apply bg-background text-foreground;
   }
 }
-

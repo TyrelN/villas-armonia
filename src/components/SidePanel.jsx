@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-export default function SidePanel({ lotNumber, onClose }) {
+export default function SidePanel({ lotNumber, onClose, onPurchaseRequest }) {
   const [lotData, setLotData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -70,37 +70,16 @@ export default function SidePanel({ lotNumber, onClose }) {
     }, 250); // Slightly longer than animation duration to ensure smooth completion
   };
 
-  const handlePurchase = async () => {
-    try {
-      // Replace with your actual purchase API endpoint
-      const response = await fetch(`/api/lots/${lotNumber}/purchase`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          lotId: lotNumber,
-          // Add any additional purchase data
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Purchase failed');
-      }
-
-      const result = await response.json();
-      alert('Purchase successful! We will contact you soon.');
-      handleClose();
-    } catch (err) {
-      console.error('Purchase error:', err);
-      alert('Purchase failed. Please try again.');
+  const handlePurchase = () => {
+    if (onPurchaseRequest && lotData) {
+      onPurchaseRequest(lotData);
     }
   };
 
   const getAvailabilityColor = (availability) => {
     switch (availability) {
       case 'available': return 'text-green-600 bg-green-100';
-      case 'unavailable': return 'text-red-600 bg-red-100';
+      case 'pending_approval': return 'text-blue-600 bg-blue-100';
       case 'reserved': return 'text-orange-600 bg-orange-100';
       case 'sold': return 'text-gray-600 bg-gray-100';
       default: return 'text-gray-600 bg-gray-100';
@@ -110,7 +89,7 @@ export default function SidePanel({ lotNumber, onClose }) {
   const getAvailabilityText = (availability) => {
     switch (availability) {
       case 'available': return 'Available';
-      case 'unavailable': return 'Unavailable';
+      case 'pending_approval': return 'Pending Approval';
       case 'reserved': return 'Reserved';
       case 'sold': return 'Sold';
       default: return 'Unknown';
@@ -271,12 +250,12 @@ export default function SidePanel({ lotNumber, onClose }) {
               onClick={handlePurchase}
               className="w-full bg-blue-600 text-white py-3 px-4 rounded-lg font-semibold hover:bg-blue-700 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
             >
-              {lotData.availability === 'available' ? 'Purchase Lot' : 'Reserve Lot'}
+              {lotData.availability === 'available' ? 'Request Purchase' : 'Request Reservation'}
             </button>
             <p className="text-xs text-gray-500 mt-2 text-center">
               {lotData.availability === 'available' 
-                ? 'Click to start the purchase process' 
-                : 'Click to place a reservation'
+                ? 'Click to submit a purchase request' 
+                : 'Click to submit a reservation request'
               }
             </p>
           </div>
@@ -292,6 +271,8 @@ export default function SidePanel({ lotNumber, onClose }) {
           </div>
         </div>
       </div>
+
+
     </div>
   );
 }

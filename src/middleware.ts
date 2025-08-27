@@ -2,9 +2,29 @@ import { NextResponse } from 'next/server'
 import { createMiddlewareSupabaseClient } from '@/lib/supabase-utils'
 
 export async function middleware(request) {
+  // Handle CORS preflight requests
+  if (request.method === 'OPTIONS') {
+    return new NextResponse(null, {
+      status: 200,
+      headers: {
+        'Access-Control-Allow-Origin': process.env.ALLOWED_ORIGIN || 'https://yourdomain.com',
+        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
+        'Access-Control-Allow-Headers': 'Content-Type, Authorization, X-Requested-With',
+        'Access-Control-Max-Age': '86400', // 24 hours
+      },
+    })
+  }
+
   let supabaseResponse = NextResponse.next({
     request,
   })
+
+  // Add CORS headers to all API responses
+  if (request.nextUrl.pathname.startsWith('/api/')) {
+    supabaseResponse.headers.set('Access-Control-Allow-Origin', process.env.ALLOWED_ORIGIN || 'https://yourdomain.com')
+    supabaseResponse.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS')
+    supabaseResponse.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization, X-Requested-With')
+  }
 
   const supabase = createMiddlewareSupabaseClient(request, supabaseResponse)
 

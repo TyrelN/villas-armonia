@@ -119,14 +119,8 @@ export default function Home() {
       {/* Headline */}
       <div className="mb-10 space-y-4">
         <p className="text-2xl md:text-3xl max-w-4xl mx-auto text-white/90 drop-shadow-md font-medium leading-relaxed">
-          A comprehensive village in the heart of 
+          A budding village in the heart of 
           <span className="font-bold text-white"> Yucatán</span>
-        </p>
-        <p className="text-xl md:text-2xl max-w-3xl mx-auto text-white/90 drop-shadow-md font-semibold leading-relaxed">
-          Prioritizing <span className="font-bold">community</span>, 
-          <span className="font-bold"> cultural exchange</span>, 
-          <span className="font-bold"> cozy luxury</span>, and 
-          <span className="font-bold"> acceptance</span>
         </p>
       </div>
 
@@ -443,36 +437,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-24 gradient-footer relative overflow-hidden">
-        {/* Sandy beach texture overlay */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(217,179,130,0.1)_0%,transparent_50%)]"></div>
-        <div className="relative z-10 max-w-4xl mx-auto text-center px-6">
-          <h2 className="text-5xl md:text-6xl font-bold text-white mb-8 text-shadow-strong">
-            Join Our Community
-          </h2>
-          <p className="text-xl text-white mb-10 max-w-3xl mx-auto leading-relaxed">
-            Be part of something extraordinary. Villa Armonia is more than a place to live – 
-            it's a place to belong, grow, and create lasting memories.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link 
-              href="/lot-map" 
-              className="glass-card hover-lift text-primary-color px-10 py-5 rounded-2xl text-lg font-semibold shadow-2xl border-2 border-accent-gold/50 relative overflow-hidden group"
-            >
-              <span className="absolute inset-0 bg-gradient-to-r from-accent-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              <span className="relative z-10">View Available Lots</span>
-            </Link>
-            <Link 
-              href="/about" 
-              className="glass hover-lift text-white px-10 py-5 rounded-2xl text-lg font-semibold border-2 border-accent-sand/50 relative overflow-hidden group"
-            >
-              <span className="absolute inset-0 bg-gradient-to-r from-accent-sand/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              <span className="relative z-10">Learn More About Us</span>
-            </Link>
-          </div>
-        </div>
-    </section>
     </div>
   );
 }

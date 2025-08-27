@@ -49,9 +49,8 @@ export default function LoginPage() {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-[#002D18]">
-      <div className="bg-white/30 backdrop-blur-lg shadow-lg rounded-xl p-8 w-full max-w-md">
-        <div className="text-center mb-8">
-          <h1 className="text-2xl font-bold text-white mb-2">Welcome Back</h1>
+      <div className="bg-white/30 backdrop-blur-lg shadow-lg rounded-xl p-8 w-full max-w-md mt-18 mb-2">
+        <div className="text-center mb-4">
           <p className="text-white/80">Sign in to your Villa Armonia account</p>
         </div>
 

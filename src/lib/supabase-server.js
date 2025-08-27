@@ -1,7 +1,12 @@
 import { cookies } from 'next/headers'
-import { createServerSupabaseClient } from './supabase-utils'
+import { createServerSupabaseClient, createAdminSupabaseClient } from './supabase-utils'
 
-export function createClient() {
-  const cookieStore = cookies()
+export async function createClient() {
+  const cookieStore = await cookies()
   return createServerSupabaseClient(cookieStore)
+}
+
+// For admin operations that don't need cookies (bypasses RLS)
+export function createAdminClient() {
+  return createAdminSupabaseClient()
 }

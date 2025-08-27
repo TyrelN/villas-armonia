@@ -273,36 +273,6 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-
-      {/* CTA Section */}
-      <section className="py-24 gradient-footer relative overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(217,179,130,0.1)_0%,transparent_50%)]"></div>
-        <div className="relative z-10 max-w-4xl mx-auto text-center px-6">
-          <h2 className="text-5xl md:text-6xl font-bold text-white mb-8 text-shadow-strong">
-            Join Our Village
-          </h2>
-          <p className="text-xl text-accent-sand mb-10 max-w-3xl mx-auto leading-relaxed">
-            Be part of a community that understands the true meaning of "It takes a village." 
-            Villa Armonia is waiting for families who want to dance to the rhythm of life together.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <Link 
-              href="/lot-map" 
-              className="glass-card hover-lift text-primary-color px-10 py-5 rounded-2xl text-lg font-semibold shadow-2xl border-2 border-accent-gold/50 relative overflow-hidden group"
-            >
-              <span className="absolute inset-0 bg-gradient-to-r from-accent-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              <span className="relative z-10">Find Your Perfect Lot</span>
-            </Link>
-            <Link 
-              href="/" 
-              className="glass hover-lift text-white px-10 py-5 rounded-2xl text-lg font-semibold border-2 border-accent-sand/50 relative overflow-hidden group"
-            >
-              <span className="absolute inset-0 bg-gradient-to-r from-accent-sand/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-              <span className="relative z-10">Return Home</span>
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
     );
   }
