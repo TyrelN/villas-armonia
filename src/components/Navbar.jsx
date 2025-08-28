@@ -34,7 +34,16 @@ export default function Navbar() {
                     src="/images/villas-armonio-logo-gold.jpeg" 
                     alt="Villa Armonia" 
                     className="h-8 md:h-10 w-auto rounded-lg"
+                    onError={(e) => {
+                      console.error('Failed to load logo:', e.target.src);
+                      // Fallback to text if image fails
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'block';
+                    }}
                   />
+                  <div className="h-8 md:h-10 flex items-center justify-center text-lg md:text-xl font-bold text-primary-color rounded-lg" style={{display: 'none'}}>
+                    Villa Armonia
+                  </div>
                 </div>
               </div>
             </Link>

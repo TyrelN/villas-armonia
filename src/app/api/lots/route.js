@@ -28,6 +28,26 @@ export async function GET() {
     return NextResponse.json(lotAvailability);
   } catch (error) {
     console.error('Error fetching lots:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+    
+    // Check if it's a database connection error
+    if (error.code === 'P1001' || error.code === 'P1002') {
+      return NextResponse.json({ 
+        error: 'Database connection failed',
+        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      }, { status: 503 });
+    }
+    
+    // Check if it's a Prisma client error
+    if (error.code && error.code.startsWith('P')) {
+      return NextResponse.json({ 
+        error: 'Database error',
+        details: process.env.NODE_ENV === 'development' ? error.message : undefined
+      }, { status: 500 });
+    }
+    
+    return NextResponse.json({ 
+      error: 'Internal server error',
+      details: process.env.NODE_ENV === 'development' ? error.message : undefined
+    }, { status: 500 });
   }
 }
