@@ -173,7 +173,7 @@ export default function AboutPage() {
               <div className="glass-card rounded-2xl p-4 border border-accent-sand/20 shadow-xl">
                 <Image
                   src="/images/baaxal_pool.webp"
-                  alt="Villa Armonia Aerial View"
+                  alt="Villa Armonia Pool"
                   width={600}
                   height={400}
                   className="rounded-xl"
