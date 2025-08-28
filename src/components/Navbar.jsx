@@ -27,13 +27,12 @@ export default function Navbar() {
               href="/" 
               className="group relative"
             >
-              <div className="bg-white/90 backdrop-blur-sm rounded-xl p-2 md:p-3 shadow-lg hover-lift transition-all duration-300 hover:scale-[1.02] relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-white/20 to-accent-sand/30 opacity-0 group-hover:opacity-100 transition-all duration-300 rounded-xl"></div>
+              <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg hover-lift transition-all duration-300 hover:scale-[1.02] relative">
                 <div className="relative z-10">
                   <img 
                     src="/images/villas-armonio-logo-gold.jpeg" 
                     alt="Villa Armonia" 
-                    className="h-8 md:h-10 w-auto rounded-lg"
+                    className="h-12 md:h-16 w-auto rounded-lg"
                     onError={(e) => {
                       console.error('Failed to load logo:', e.target.src);
                       // Fallback to text if image fails

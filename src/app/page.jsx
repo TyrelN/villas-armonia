@@ -108,38 +108,54 @@ export default function Home() {
   alt="Villa Armonia Sunset"
 >
   {/* Hero Content with Glassmorphism */}
-  <div className="mt-20 text-center px-6 max-w-6xl mx-auto">
-    <div className="bg-white/15 backdrop-blur-md border border-white/20 rounded-2xl p-16 shadow-2xl">
+  <div className="absolute bottom-8 md:left-8 px-6 max-w-4xl w-[calc(100%-2rem)] md:w-auto">
+    <div className="bg-white/15 backdrop-blur-md border border-white/20 rounded-2xl p-4 md:pt-4 shadow-2xl">
       
-      {/* Main title */}
-      <h1 className="text-6xl md:text-7xl font-bold mb-8 text-white drop-shadow-lg leading-tight">
-        Villa Armonia
-      </h1>
+      <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+        {/* Logo on the left */}
+        <div className="flex-shrink-0">
+          <img 
+            src="/images/villas-armonia-logo-green.jpg" 
+            alt="Villa Armonia" 
+            className="h-45 md:h-32 w-auto rounded-lg"
+            onError={(e) => {
+              console.error('Failed to load logo:', e.target.src);
+              // Fallback to text if image fails
+              e.target.style.display = 'none';
+              e.target.nextSibling.style.display = 'block';
+            }}
+          />
+          <div className="h-20 md:h-32 flex items-center justify-center text-lg md:text-xl font-bold text-primary-color rounded-lg" style={{display: 'none'}}>
+            Villa Armonia
+          </div>
+        </div>
 
-      {/* Headline */}
-      <div className="mb-10 space-y-4">
-        <p className="text-2xl md:text-3xl max-w-4xl mx-auto text-white/90 drop-shadow-md font-medium leading-relaxed">
-          A budding village in the heart of 
-          <span className="font-bold text-white"> Yucatán</span>
-        </p>
-      </div>
+        {/* Content on the right */}
+        <div className="flex flex-col gap-4">
+          {/* Headline */}
+          <div className="space-y-2">
+            <p className="text-xl md:text-2xl text-white/90 drop-shadow-md font-medium leading-relaxed text-center md:text-left">
+              An upcoming village in the heart of 
+              <span className="font-bold text-white"> Yucatán</span>
+            </p>
+          </div>
 
-      {/* Buttons */}
-      <div className="flex flex-col sm:flex-row gap-8 justify-center">
-        <Link 
-          href="/lot-map" 
-          className="gradient-earth hover-lift text-white px-12 py-6 rounded-2xl text-xl font-semibold shadow-xl relative group transition-transform duration-300 hover:scale-105"
-        >
-          <span className="absolute inset-0 bg-gradient-to-r from-accent-gold/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-          <span className="relative z-10">Explore Available Lots</span>
-        </Link>
-        <Link 
-          href="/about" 
-          className="bg-white/20 backdrop-blur-sm hover-lift text-white px-12 py-6 rounded-2xl text-xl font-semibold border border-accent-gold/40 relative group transition-all duration-300 hover:scale-105 hover:border-accent-gold/70 shadow-lg"
-        >
-          <span className="absolute inset-0 bg-gradient-to-r from-accent-gold/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
-          <span className="relative z-10">Learn More</span>
-        </Link>
+          {/* Button below description */}
+          <div className="flex flex-col sm:flex-row gap-4">
+            <Link 
+              href="/lot-map"
+              className="px-6 py-3 gradient-warm rounded-lg shadow-lg hover-lift transition-all duration-300 hover:scale-[1.02] text-white font-semibold text-center"
+            >
+              Explore Lots
+            </Link>
+            <Link 
+              href="/about"
+              className="px-6 py-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg shadow-lg hover-lift transition-all duration-300 hover:scale-[1.02] text-white font-semibold text-center hover:bg-white/30"
+            >
+              Learn More
+            </Link>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -152,7 +168,7 @@ export default function Home() {
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <div className="text-center mb-16">
             <h2 className="text-5xl md:text-6xl font-bold text-primary-color mb-6 text-shadow-soft">
-              Villa Showcase
+              Villas Armonia
             </h2>
             <p className="text-xl text-secondary-color max-w-3xl mx-auto leading-relaxed">
               Discover the beauty and luxury of our villa complexes, each designed with 
