@@ -4,12 +4,11 @@ const nextConfig = {
         optimizeCss: true,
         optimizePackageImports: ['@radix-ui/react-icons'],
       },
-      // Optimize CSS loading
-      optimizeFonts: true,
       compiler: {
         removeConsole: process.env.NODE_ENV === 'production',
       },
     images: {
+        unoptimized: true,
         domains: ['your-supabase-project.supabase.co'],
         formats: ['image/webp', 'image/avif'],
       },
