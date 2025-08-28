@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "prisma generate && next dev --turbopack",
     "build": "prisma generate && next build",
+    "postinstall": "npx prisma migrate deploy",
     "start": "next start",
     "lint": "next lint",
     "svg:react": "svgr src/assets/lot-map.svg --out-dir src/assets/ --ext jsx --icon --config-file .svgrrc.js",
