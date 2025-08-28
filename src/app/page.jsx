@@ -108,7 +108,7 @@ export default function Home() {
   alt="Villa Armonia Sunset"
 >
   {/* Hero Content with Glassmorphism */}
-  <div className="absolute bottom-8 md:left-8 px-6 max-w-4xl w-[calc(100%-2rem)] md:w-auto">
+  <div className="absolute md:bottom-8 md:left-8 px-6 max-w-4xl w-[calc(100%-2rem)] md:w-auto">
     <div className="bg-white/15 backdrop-blur-md border border-white/20 rounded-2xl p-4 md:pt-4 shadow-2xl">
       
       <div className="flex flex-col md:flex-row items-center md:items-start gap-6">

@@ -74,12 +74,12 @@ export default function LotMapPage() {
             Villa Armonia - Interactive Lot Map
           </h1>
           <p className="text-white text-lg drop-shadow-lg max-w-2xl mx-auto px-4">
-            Click on available lots to view details. Unavailable lots are shown in red.
+            Click on available lots to view details.
           </p>
         </div>
 
         {/* Legend - Centered and styled for dark background */}
-        <div className="flex justify-center mb-6">
+        <div className="flex justify-center mb-6 mx-12 md:mx-0">
           <div className="flex flex-wrap gap-4 bg-white bg-opacity-90 backdrop-blur-sm rounded-lg p-4 shadow-lg">
             <div className="flex items-center gap-2">
               <div 

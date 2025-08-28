@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export default function AboutPage() {
     return (
-    <div className="min-h-screen bg-gradient-to-br from-warm via-accent-sand/5 to-accent-gold/5">
+    <div className="min-h-screen bg-gradient-to-br from-warm via-accent-sand/5 to-accent-gold/5 mt-12">
       {/* Hero Story Section */}
       <section className="relative py-24 overflow-hidden">
         {/* Background with subtle texture */}
