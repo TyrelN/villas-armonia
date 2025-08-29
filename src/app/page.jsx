@@ -17,20 +17,6 @@ import {
 } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
 
-// Parallax Background Component
-const ParallaxBackground = ({ children, imageSrc, alt }) => {
-  return (
-    <div 
-  className="parallax"
-  style={{ backgroundImage: `url(${imageSrc})` }}
->
-  <div className="relative z-10 h-full flex items-center justify-center">
-    {children}
-  </div>
-</div>
-  );
-};
-
 export default function Home() {
   // Villa showcase images
   const villaImages = [
@@ -41,7 +27,7 @@ export default function Home() {
       description: "Stunning aerial perspective of our premier villa complex"
     },
     {
-      src: "/images/Chanpaal_birdseye.webp", 
+      src: "/images/Chanpaal_birdseye.webp",
       alt: "Chanpaal Villa Bird's Eye View",
       title: "Chanpaal Villa",
       description: "Bird's eye view showcasing the architectural beauty"
@@ -101,65 +87,78 @@ export default function Home() {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-warm via-accent-sand/5 to-accent-gold/5">
+    <div>
       {/* Hero Section with Parallax Background */}
-      <ParallaxBackground 
-  imageSrc="/images/mexico-sunset-background-wide.webp"
-  alt="Villa Armonia Sunset"
->
-  {/* Hero Content with Glassmorphism */}
-  <div className="absolute md:bottom-8 md:left-8 px-6 max-w-4xl w-[calc(100%-2rem)] md:w-auto">
-    <div className="bg-white/15 backdrop-blur-md border border-white/20 rounded-2xl p-4 md:pt-4 shadow-2xl">
-      
-      <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
-        {/* Logo on the left */}
-        <div className="flex-shrink-0">
-          <img 
-            src="/images/villas-armonia-logo-green.jpg" 
-            alt="Villa Armonia" 
-            className="h-45 md:h-32 w-auto rounded-lg"
-            onError={(e) => {
-              console.error('Failed to load logo:', e.target.src);
-              // Fallback to text if image fails
-              e.target.style.display = 'none';
-              e.target.nextSibling.style.display = 'block';
-            }}
-          />
-          <div className="h-20 md:h-32 flex items-center justify-center text-lg md:text-xl font-bold text-primary-color rounded-lg" style={{display: 'none'}}>
-            Villa Armonia
-          </div>
-        </div>
+      <div className="relative h-screen overflow-hidden">
+        {/* Fullscreen Video Background */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover z-0"
+        >
+          <source src="/images/villas-video.webm" type="video/webm" />
+          {/* Fallback for browsers that don't support video */}
+          <div className="absolute inset-0 bg-gradient-to-br from-warm via-accent-sand/5 to-accent-gold/5"></div>
+        </video>
 
-        {/* Content on the right */}
-        <div className="flex flex-col gap-4">
-          {/* Headline */}
-          <div className="space-y-2">
-            <p className="text-xl md:text-2xl text-white/90 drop-shadow-md font-medium leading-relaxed text-center md:text-left">
-              An upcoming village in the heart of 
-              <span className="font-bold text-white"> Yucatán</span>
-            </p>
-          </div>
+        {/* Content Overlay */}
+        <div className="relative z-10 h-screen flex items-end">
+          {/* Hero Content with Glassmorphism */}
+          <div className="absolute md:bottom-8 md:left-8 px-6 max-w-4xl w-[calc(100%-2rem)] md:w-auto">
+            <div className="bg-white/15 backdrop-blur-md border border-white/20 rounded-2xl p-4 md:pt-4 shadow-2xl">
 
-          {/* Button below description */}
-          <div className="flex flex-col sm:flex-row gap-4">
-            <Link 
-              href="/lot-map"
-              className="px-6 py-3 gradient-warm rounded-lg shadow-lg hover-lift transition-all duration-300 hover:scale-[1.02] text-white font-semibold text-center"
-            >
-              Explore Lots
-            </Link>
-            <Link 
-              href="/about"
-              className="px-6 py-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg shadow-lg hover-lift transition-all duration-300 hover:scale-[1.02] text-white font-semibold text-center hover:bg-white/30"
-            >
-              Learn More
-            </Link>
+              <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
+                {/* Logo on the left */}
+                <div className="flex-shrink-0">
+                  <img
+                    src="/images/villas-armonia-logo-green.jpg"
+                    alt="Villa Armonia"
+                    className="h-45 md:h-32 w-auto rounded-lg"
+                    onError={(e) => {
+                      console.error('Failed to load logo:', e.target.src);
+                      // Fallback to text if image fails
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'block';
+                    }}
+                  />
+                  <div className="h-20 md:h-32 flex items-center justify-center text-lg md:text-xl font-bold text-primary-color rounded-lg" style={{ display: 'none' }}>
+                    Villa Armonia
+                  </div>
+                </div>
+
+                {/* Content on the right */}
+                <div className="flex flex-col gap-4">
+                  {/* Headline */}
+                  <div className="space-y-2">
+                    <p className="text-xl md:text-2xl text-white/90 drop-shadow-md font-medium leading-relaxed text-center md:text-left">
+                      An upcoming village in the heart of
+                      <span className="font-bold text-white"> Yucatán</span>
+                    </p>
+                  </div>
+
+                  {/* Button below description */}
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Link
+                      href="/lot-map"
+                      className="px-6 py-3 gradient-warm rounded-lg shadow-lg hover-lift transition-all duration-300 hover:scale-[1.02] text-white font-semibold text-center"
+                    >
+                      Explore Lots
+                    </Link>
+                    <Link
+                      href="/about"
+                      className="px-6 py-3 bg-white/20 backdrop-blur-sm border border-white/30 rounded-lg shadow-lg hover-lift transition-all duration-300 hover:scale-[1.02] text-white font-semibold text-center hover:bg-white/30"
+                    >
+                      Learn More
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
-</ParallaxBackground>
 
       {/* Villa Showcase Carousel Section */}
       <section className="py-24 bg-gradient-to-br from-accent-sand/10 via-warm to-accent-gold/5 relative">
@@ -171,11 +170,11 @@ export default function Home() {
               Villas Armonia
             </h2>
             <p className="text-xl text-secondary-color max-w-3xl mx-auto leading-relaxed">
-              Discover the beauty and luxury of our villa complexes, each designed with 
+              Discover the beauty and luxury of our villa complexes, each designed with
               community, comfort, and cultural exchange in mind.
             </p>
           </div>
-          
+
           <div className="glass-card rounded-3xl p-8 border border-accent-sand/20 shadow-2xl">
             <Carousel className="w-full">
               <CarouselContent>
@@ -220,12 +219,12 @@ export default function Home() {
               Our Vision
             </h2>
             <p className="text-xl text-secondary-color max-w-4xl mx-auto leading-relaxed">
-              Villa Armonia represents more than just a residential development – 
-              it's a living, breathing community where people from around the world 
+              Villa Armonia represents more than just a residential development –
+              it's a living, breathing community where people from around the world
               come together to create something extraordinary.
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-3 gap-10">
             <div className="glass-card rounded-2xl p-8 text-center hover-lift border border-accent-sand/20 relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-br from-accent-sand/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
@@ -237,12 +236,12 @@ export default function Home() {
                 </div>
                 <h3 className="text-2xl font-semibold text-primary-color mb-4">Community First</h3>
                 <p className="text-secondary-color leading-relaxed">
-                  Building meaningful connections through shared spaces, events, and 
+                  Building meaningful connections through shared spaces, events, and
                   collaborative activities that bring neighbors together.
                 </p>
               </div>
             </div>
-            
+
             <div className="glass-card rounded-2xl p-8 text-center hover-lift border border-accent-sunset/20 relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-br from-accent-sunset/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
               <div className="relative z-10">
@@ -253,12 +252,12 @@ export default function Home() {
                 </div>
                 <h3 className="text-2xl font-semibold text-primary-color mb-4">Cultural Exchange</h3>
                 <p className="text-secondary-color leading-relaxed">
-                  Celebrating diversity and fostering understanding through cultural 
+                  Celebrating diversity and fostering understanding through cultural
                   events, language exchange, and shared traditions.
                 </p>
               </div>
             </div>
-            
+
             <div className="glass-card rounded-2xl p-8 text-center hover-lift border border-accent-gold/20 relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-br from-accent-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
               <div className="relative z-10">
@@ -269,7 +268,7 @@ export default function Home() {
                 </div>
                 <h3 className="text-2xl font-semibold text-primary-color mb-4">Cozy Luxury</h3>
                 <p className="text-secondary-color leading-relaxed">
-                  Thoughtfully designed spaces that combine comfort with elegance, 
+                  Thoughtfully designed spaces that combine comfort with elegance,
                   creating homes that feel both luxurious and welcoming.
                 </p>
               </div>
@@ -288,11 +287,11 @@ export default function Home() {
               World-Class Amenities
             </h2>
             <p className="text-xl text-secondary-color max-w-4xl mx-auto leading-relaxed">
-              Every detail has been carefully planned to enhance your lifestyle and 
+              Every detail has been carefully planned to enhance your lifestyle and
               create opportunities for connection and wellness.
             </p>
           </div>
-          
+
           <div className="glass-card rounded-3xl p-8 border border-accent-sand/20 shadow-2xl">
             <Accordion type="single" collapsible className="w-full">
               {amenities.map((amenity, index) => (
@@ -323,8 +322,8 @@ export default function Home() {
                 Heart of Yucatán
               </h2>
               <p className="text-xl text-secondary-color mb-8 leading-relaxed">
-                Nestled in one of Mexico's most culturally rich regions, Villa Armonia 
-                offers the perfect blend of natural beauty, historical significance, 
+                Nestled in one of Mexico's most culturally rich regions, Villa Armonia
+                offers the perfect blend of natural beauty, historical significance,
                 and modern convenience.
               </p>
               <div className="space-y-6">
@@ -357,7 +356,7 @@ export default function Home() {
                 </div>
               </div>
             </div>
-            
+
             <div className="relative">
               <div className="glass-card rounded-2xl p-4 border border-accent-sand/20 shadow-xl">
                 <Image
@@ -383,11 +382,11 @@ export default function Home() {
               Life in Villa Armonia
             </h2>
             <p className="text-xl text-secondary-color max-w-4xl mx-auto leading-relaxed">
-              Experience a lifestyle that balances privacy with community, 
+              Experience a lifestyle that balances privacy with community,
               luxury with authenticity, and modern convenience with cultural richness.
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             <div className="glass-card rounded-2xl p-8 text-center hover-lift border border-accent-sand/20 relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-br from-accent-sand/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
@@ -403,7 +402,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            
+
             <div className="glass-card rounded-2xl p-8 text-center hover-lift border border-accent-sunset/20 relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-br from-accent-sunset/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
               <div className="relative z-10">
@@ -418,7 +417,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            
+
             <div className="glass-card rounded-2xl p-8 text-center hover-lift border border-accent-gold/20 relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-br from-accent-gold/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
               <div className="relative z-10">
@@ -434,7 +433,7 @@ export default function Home() {
                 </p>
               </div>
             </div>
-            
+
             <div className="glass-card rounded-2xl p-8 text-center hover-lift border border-accent-sunset/20 relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-br from-accent-sunset/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-2xl"></div>
               <div className="relative z-10">
