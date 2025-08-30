@@ -110,6 +110,7 @@ export default function Home() {
           className="absolute inset-0 w-full h-full object-cover z-0 hidden md:block"
         >
           <source src="/images/villas-video.webm" type="video/webm" />
+          <source src="/images/villas-video.mp4" type="video/mp4" />
           {/* Fallback for browsers that don't support video */}
           <div className="absolute inset-0 bg-gradient-to-br from-warm via-accent-sand/5 to-accent-gold/5"></div>
         </video>
