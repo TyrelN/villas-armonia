@@ -90,13 +90,24 @@ export default function Home() {
     <div>
       {/* Hero Section with Parallax Background */}
       <div className="relative h-screen overflow-hidden">
-        {/* Fullscreen Video Background */}
+        {/* Mobile Background Image */}
+        <div 
+          className="absolute inset-0 w-full h-full object-cover z-0 md:hidden"
+          style={{
+            backgroundImage: 'url(/images/mexico-sunset-background-wide.webp)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat'
+          }}
+        />
+        
+        {/* Desktop Video Background */}
         <video
           autoPlay
           loop
           muted
           playsInline
-          className="absolute inset-0 w-full h-full object-cover z-0"
+          className="absolute inset-0 w-full h-full object-cover z-0 hidden md:block"
         >
           <source src="/images/villas-video.webm" type="video/webm" />
           {/* Fallback for browsers that don't support video */}
@@ -106,8 +117,8 @@ export default function Home() {
         {/* Content Overlay */}
         <div className="relative z-10 h-screen flex items-end">
           {/* Hero Content with Glassmorphism */}
-          <div className="absolute md:bottom-8 md:left-8 px-6 max-w-4xl w-[calc(100%-2rem)] md:w-auto">
-            <div className="bg-white/15 backdrop-blur-md border border-white/20 rounded-2xl p-4 md:pt-4 shadow-2xl">
+          <div className="absolute md:bottom-8 md:left-8 left-4 bottom-4 p-6 mx-auto max-w-4xl w-[calc(100%-2rem)] md:w-auto">
+            <div className="bg-white/15 backdrop-blur-md border border-white/20 rounded-2xl shadow-2xl p-6">
 
               <div className="flex flex-col md:flex-row items-center md:items-start gap-6">
                 {/* Logo on the left */}
